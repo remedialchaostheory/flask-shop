@@ -1,4 +1,5 @@
 Flask
 Flask-RESTful
 Flask-SQLAlchemy
-psycopg2
+psycopg2-binary
+Flask-JWT==0.3.2
