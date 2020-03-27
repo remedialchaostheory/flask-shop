@@ -40,5 +40,15 @@ class StoreTest(IntegrationBaseTest):
             store.save_to_db()
             item.save_to_db()
 
-            self.assertEqual(store.items.count(), 1)
-            self.assertEqual(store.items.first().name, item_name)
+            self.assertEqual(store.items.count(), 1, 'Store count should be 1')
+            self.assertEqual(
+                store.items.first().name, item_name,
+                f'Store item should be {item_name}'
+            )
+
+    def test_store_json(self):
+        store_name = 'Test Store'
+        store = StoreModel(store_name)
+        expected = {'name': store_name, 'items': []}
+
+        self.assertDictEqual(store.json(), expected)
