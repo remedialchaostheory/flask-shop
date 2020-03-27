@@ -52,3 +52,25 @@ class StoreTest(IntegrationBaseTest):
         expected = {'name': store_name, 'items': []}
 
         self.assertDictEqual(store.json(), expected)
+
+    def test_store_json_with_item(self):
+        with self.app_context():
+            store_name = 'Test Store'
+            item_name = 'Test Item'
+            item_price = 99.99
+            item_store_id = 1
+            store = StoreModel(store_name)
+            item = ItemModel(item_name, item_price, item_store_id)
+
+            expected = {
+                'name': store_name,
+                'items': [{
+                    'name': item_name,
+                    'price': item_price,
+                }]
+            }
+
+            store.save_to_db()
+            item.save_to_db()
+
+            self.assertDictEqual(store.json(), expected)
