@@ -1,8 +1,8 @@
 from models.user import UserModel
-from tests.integration.integration_base_test import IntegrationBaseTest
+from tests.base_test import BaseTest
 
 
-class UserTest(IntegrationBaseTest):
+class UserTest(BaseTest):
     def test_crud(self):
         with self.app_context():
             username = 'Test User'
