@@ -4,7 +4,7 @@ import json
 
 
 class UserTest(BaseTest):
-    def test_register_uer(self):
+    def test_register_user(self):
         with self.app() as client:
             with self.app_context():
                 resp = client.post(
@@ -18,9 +18,3 @@ class UserTest(BaseTest):
                 self.assertIsNotNone(UserModel.find_by_username('test'))
                 self.assertDictEqual({'message': 'User created successfully.'},
                                      json.loads(resp.data))
-
-    def test_register_and_login(self):
-        pass
-
-    def test_register_duplicate_user(self):
-        pass
