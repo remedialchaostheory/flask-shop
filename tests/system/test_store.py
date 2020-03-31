@@ -1,3 +1,4 @@
+from models.item import ItemModel
 from models.store import StoreModel
 from tests.base_test import BaseTest
 import json
@@ -37,13 +38,46 @@ class StoreTest(BaseTest):
                                      json.loads(resp.data))
 
     def test_find_store(self):
-        pass
+        with self.app() as client:
+            with self.app_context():
+                store_name = 'Test Store'
+                StoreModel(store_name).save_to_db()
+                resp = client.get(f'/store/{store_name}')
+
+                self.assertEqual(resp.status_code, 200)
+                self.assertDictEqual({
+                    'name': store_name,
+                    'items': []
+                }, json.loads(resp.data))
 
     def test_store_not_found(self):
-        pass
+        with self.app() as client:
+            with self.app_context():
+                store_name = 'Test Store'
+                resp = client.get(f'/store/{store_name}')
+
+                self.assertEqual(resp.status_code, 404)
+                self.assertDictEqual({
+                    'message': 'Store not found',
+                }, json.loads(resp.data))
 
     def test_store_not_found_with_items(self):
-        pass
+        with self.app() as client:
+            with self.app_context():
+                store_name = 'Test Store'
+                StoreModel(store_name).save_to_db()
+                ItemModel('test item', 99.99, 1).save_to_db()
+                resp = client.get(f'/store/{store_name}')
+
+                self.assertEqual(resp.status_code, 200)
+                self.assertDictEqual({
+                    'name':
+                    store_name,
+                    'items': [{
+                        'name': 'test item',
+                        'price': 99.99,
+                    }]
+                }, json.loads(resp.data))
 
     def test_store_list(self):
         pass
