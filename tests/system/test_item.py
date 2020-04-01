@@ -44,3 +44,24 @@ class ItemTest(BaseTest):
                     headers={'Authorization': self.access_token}
                 )
                 self.assertEqual(resp.status_code, 404)
+
+    def test_get_item(self):
+        with self.app() as client:
+            with self.app_context():
+                StoreModel('test store').save_to_db()
+                ItemModel('test item', 99.99, 1).save_to_db()
+                resp = client.get(
+                    f'/item/test item',
+                    headers={'Authorization': self.access_token}
+                )
+                self.assertEqual(resp.status_code, 200)
+
+    def test_delete_item(self):
+        with self.app() as client:
+            with self.app_context():
+                StoreModel('test store').save_to_db()
+                ItemModel('test item', 99.99, 1).save_to_db()
+                resp = client.delete(f'/item/test item')
+                self.assertEqual(resp.status_code, 200)
+                self.assertDictEqual({'message': 'Item deleted'},
+                                     json.loads(resp.data))
