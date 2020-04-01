@@ -65,3 +65,36 @@ class ItemTest(BaseTest):
                 self.assertEqual(resp.status_code, 200)
                 self.assertDictEqual({'message': 'Item deleted'},
                                      json.loads(resp.data))
+
+    def test_create_item(self):
+        with self.app() as client:
+            with self.app_context():
+                StoreModel('test store').save_to_db()
+                resp = client.post(
+                    f'/item/test item', data={
+                        'price': 99.99,
+                        'store_id': 1
+                    }
+                )
+                self.assertEqual(resp.status_code, 201)
+                self.assertDictEqual({
+                    'name': 'test item',
+                    'price': 99.99
+                }, json.loads(resp.data))
+
+    def test_create_duplicate_item(self):
+        with self.app() as client:
+            with self.app_context():
+                StoreModel('test store').save_to_db()
+                ItemModel('test item', 99.99, 1).save_to_db()
+                resp = client.post(
+                    f'/item/test item', data={
+                        'price': 99.99,
+                        'store_id': 1
+                    }
+                )
+                self.assertEqual(resp.status_code, 400)
+                self.assertDictEqual({
+                    'message':
+                    'An item with name \'test item\' already exists.'
+                }, json.loads(resp.data))
