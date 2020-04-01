@@ -25,7 +25,6 @@ class ItemTest(UnitBaseTest):
             item.store_id, store_id,
             f'Got store id: {item.store_id}. Should be {store_id}'
         )
-        print("item ->", item.store)
         self.assertIsNone(item.store)
 
     def test_json(self):
