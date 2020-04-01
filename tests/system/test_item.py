@@ -31,9 +31,9 @@ class ItemTest(BaseTest):
             with self.app_context():
                 resp = client.get('/item/test')
                 self.assertRaises(JWTError)
-                # self.assertEqual(
-                #     resp.status_code, 401
-                # )  # or should be 401 bc no header sent ?
+                self.assertEqual(
+                    resp.status_code, 500
+                )  # or should be 401 bc no header sent ?
 
     def test_get_item_not_found(self):
         username = 'test'
