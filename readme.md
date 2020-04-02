@@ -1,4 +1,6 @@
-# Stores REST Api
+# Flask shop
+
+Users can create items with prices in different stores.
 
 This is built with Flask, Flask-RESTful, Flask-JWT, and Flask-SQLAlchemy.
 
