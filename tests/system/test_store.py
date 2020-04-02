@@ -14,6 +14,7 @@ class StoreTest(BaseTest):
                 self.assertEqual(resp.status_code, 201)
                 self.assertIsNotNone(StoreModel.find_by_name(store_name))
                 self.assertDictEqual({
+                    'id': 1,
                     'name': store_name,
                     'items': []
                 }, json.loads(resp.data))
@@ -46,6 +47,7 @@ class StoreTest(BaseTest):
 
                 self.assertEqual(resp.status_code, 200)
                 self.assertDictEqual({
+                    'id': 1,
                     'name': store_name,
                     'items': []
                 }, json.loads(resp.data))
@@ -61,7 +63,7 @@ class StoreTest(BaseTest):
                     'message': 'Store not found',
                 }, json.loads(resp.data))
 
-    def test_store_not_found_with_items(self):
+    def test_store_found_with_items(self):
         with self.app() as client:
             with self.app_context():
                 store_name = 'Test Store'
@@ -71,6 +73,8 @@ class StoreTest(BaseTest):
 
                 self.assertEqual(resp.status_code, 200)
                 self.assertDictEqual({
+                    'id':
+                    1,
                     'name':
                     store_name,
                     'items': [{
@@ -88,6 +92,7 @@ class StoreTest(BaseTest):
                 resp = client.get('/stores')
                 self.assertDictEqual({
                     'stores': [{
+                        'id': 1,
                         'name': store_name,
                         'items': []
                     }]
@@ -102,9 +107,10 @@ class StoreTest(BaseTest):
 
                 resp = client.get('/stores')
                 self.assertDictEqual({
-                    'stores': [{
-                        'name':
-                        store_name,
+                    'stores':
+                    [{
+                        'id': 1,
+                        'name': store_name,
                         'items': [{
                             'name': 'test item',
                             'price': 99.99,
