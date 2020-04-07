@@ -2,7 +2,8 @@
 
 Users can create items with prices in different stores.
 
-This is built with Flask, Flask-RESTful, Flask-JWT, and Flask-SQLAlchemy.
+This is built with Python - Flask, Flask-RESTful, Flask-JWT, and Flask-SQLAlchemy.<br>
+And also Postman and TravisCI.
 
 To get started:
 
