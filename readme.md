@@ -1,4 +1,4 @@
-# Flask shop [![Build Status](https://travis-ci.com/remedialchaostheory/flask-shop.svg?branch=master)](https://travis-ci.com/remedialchaostheory/flask-shop)
+# Flask shops [![Build Status](https://travis-ci.com/remedialchaostheory/flask-shop.svg?branch=master)](https://travis-ci.com/remedialchaostheory/flask-shop)
 
 Users can create items with prices in different stores.
 
